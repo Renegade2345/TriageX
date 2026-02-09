@@ -1,7 +1,14 @@
 /**
- * Validates extracted fields
+ * Validates and normalizes extracted claim fields
+ * - Detects missing mandatory fields
+ * - Normalizes numeric values
+ * - Handles invalid numeric formats safely
+ *
  * @param {object} fields
- * @returns {{ missingFields: string[], normalizedFields: object }}
+ * @returns {{
+ *   missingFields: string[],
+ *   normalizedFields: object
+ * }}
  */
 function validateFields(fields) {
   const mandatoryFields = [
@@ -21,28 +28,42 @@ function validateFields(fields) {
     "initialEstimate",
   ];
 
+  const normalizedFields = { ...fields };
   const missingFields = [];
 
-  mandatoryFields.forEach((field) => {
-    if (!fields[field] || fields[field].trim() === "") {
-      missingFields.push(field);
-    }
-  });
-
-  // Normalize numeric fields
-  const normalizedFields = { ...fields };
-
+  
   if (fields.estimatedDamage) {
-    normalizedFields.estimatedDamage = parseFloat(
-      fields.estimatedDamage.replace(/[^0-9.]/g, "")
+    const parsedDamage = parseFloat(
+      String(fields.estimatedDamage).replace(/[^0-9.]/g, "")
     );
+
+    normalizedFields.estimatedDamage = isNaN(parsedDamage)
+      ? null
+      : parsedDamage;
   }
 
   if (fields.initialEstimate) {
-    normalizedFields.initialEstimate = parseFloat(
-      fields.initialEstimate.replace(/[^0-9.]/g, "")
+    const parsedEstimate = parseFloat(
+      String(fields.initialEstimate).replace(/[^0-9.]/g, "")
     );
+
+    normalizedFields.initialEstimate = isNaN(parsedEstimate)
+      ? null
+      : parsedEstimate;
   }
+
+ 
+  mandatoryFields.forEach((field) => {
+    const value = normalizedFields[field];
+
+    if (
+      value === null ||
+      value === undefined ||
+      (typeof value === "string" && value.trim() === "")
+    ) {
+      missingFields.push(field);
+    }
+  });
 
   return {
     missingFields,
