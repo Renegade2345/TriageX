@@ -1,13 +1,16 @@
 TriageX
 
-A lightweight REST-based claim processing agent that extracts structured data from FNOL (First Notice of Loss) documents, validates required fields, applies rule-based routing, and returns an explainable decision in JSON format
+A lightweight REST-based claim processing agent that extracts structured data from FNOL (First Notice of Loss) documents, validates required fields, applies rule-based routing, and returns an explainable decision in JSON format.
 
 # Problem Statement
 This project implements an autonomous insurance claims processing agent that:
 
 Extracts key fields from FNOL documents (PDF/TXT)
+
 Identifies missing or inconsistent fields
+
 Classifies and routes claims based on business rules
+
 Provides a short explanation for the routing decision
 
 ## Tech Stack
