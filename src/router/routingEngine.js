@@ -5,7 +5,7 @@
  * @returns {{ recommendedRoute: string, reasoning: string }}
  */
 function routeClaim(fields, missingFields) {
-  // 1️⃣ Manual Review if missing fields
+  // Manual Review if missing fields
   if (missingFields.length > 0) {
     return {
       recommendedRoute: "Manual Review",
@@ -17,21 +17,37 @@ function routeClaim(fields, missingFields) {
   const claimType = fields.claimType?.toLowerCase() || "";
   const damage = fields.estimatedDamage;
 
-  // 2️⃣ Fraud keyword detection
-  const fraudKeywords = ["fraud", "inconsistent", "staged"];
+  
+  // Fraud keyword detection 
+const fraudKeywords = ["fraud", "inconsistent", "staged"];
 
-  const hasFraudKeyword = fraudKeywords.some((keyword) =>
-    description.includes(keyword)
-  );
+// Negative context patterns
+const negativePatterns = [
+  "no fraud",
+  "not fraud",
+  "no signs of fraud",
+  "fraud not suspected",
+  "no staged",
+  "not staged"
+];
 
-  if (hasFraudKeyword) {
-    return {
-      recommendedRoute: "Investigation Flag",
-      reasoning: "Description contains potential fraud indicators.",
-    };
-  }
+const containsFraudKeyword = fraudKeywords.some((keyword) =>
+  description.includes(keyword)
+);
 
-  // 3️⃣ Injury claims
+const containsNegativeContext = negativePatterns.some((pattern) =>
+  description.includes(pattern)
+);
+
+if (containsFraudKeyword && !containsNegativeContext) {
+  return {
+    recommendedRoute: "Investigation Flag",
+    reasoning: "Description contains potential fraud indicators.",
+  };
+}
+
+
+  // Injury claims
   if (claimType === "injury") {
     return {
       recommendedRoute: "Specialist Queue",
@@ -39,7 +55,7 @@ function routeClaim(fields, missingFields) {
     };
   }
 
-  // 4️⃣ Fast-track for low damage
+  // Fast-track for low damage
   if (typeof damage === "number" && damage < 25000) {
     return {
       recommendedRoute: "Fast-track",
