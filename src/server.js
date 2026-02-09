@@ -1,6 +1,8 @@
 const app = require("./app");
 const { parseDocument } = require("./extractor/pdfParser");
 const { extractFields } = require("./extractor/fieldExtractor");
+const { validateFields } = require("./validator/validator");
+
 
 const path = require("path");
 
@@ -12,6 +14,16 @@ async function testParser() {
     const text = await parseDocument(filePath);
 
     const fields = extractFields(text);
+
+    
+    
+    
+    
+    const validation = validateFields(fields);
+    
+    console.log("----- VALIDATION RESULT -----");
+    console.log(validation);
+    console.log("-----------------------------");
 
 console.log("----- EXTRACTED FIELDS -----");
 console.log(fields);
