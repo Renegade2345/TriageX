@@ -1,0 +1,20 @@
+Policy Number: ABC12345
+Policyholder Name: John Doe
+Effective Dates: 01/01/2024 - 01/01/2025
+
+Date: 02/15/2024
+Time: 14:30
+Location: New York
+Description: Minor accident with no fraud suspected.
+
+Claimant: John Doe
+Third Parties: None
+Contact Details: 9876543210
+
+Asset Type: Car
+Asset ID: VIN123456
+Estimated Damage: 20000
+
+Claim Type: vehicle
+Attachments: photo.jpg
+Initial Estimate: 18000
