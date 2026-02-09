@@ -11,22 +11,28 @@ Classifies and routes claims based on business rules
 Provides a short explanation for the routing decision
 
 ## Tech Stack
-Node.js
-Express.js
+Node.js, 
+
+Express.js and 
+
 Multer (file upload handling)
 
 
 ### Running the Project Locally
 
 Step 1 – Install Dependencies
+
 npm install
 
 Step 2 – Start the Server
+
 npm run dev
 Server runs at: http://localhost:3000
 
 #### Testing the API
+
 Endpoint
+
 POST /process-claim
 
 Request:
