@@ -27,6 +27,7 @@ npm install
 Step 2 – Start the Server
 
 npm run dev
+
 Server runs at: http://localhost:3000
 
 #### Testing the API
@@ -37,8 +38,11 @@ POST /process-claim
 
 Request:
 Content-Type: multipart/form-data
+
 Field name: document
+
 Supported formats: .pdf, .txt
+
 Upload an FNOL document as the document field.
 
 
@@ -48,9 +52,13 @@ Run:
 npm test
 
 Test coverage includes:
+
 Field extraction
+
 Validation & normalization
+
 Routing logic
+
 Edge-case handling
 
 
@@ -63,20 +71,24 @@ Edge-case handling
   "reasoning": ""
 }
 
-extractedFields → normalized structured data
-missingFields → list of missing mandatory fields
-recommendedRoute → routing decision
-reasoning → short explanation of decision
+extractedFields = normalized structured data
+
+missingFields =  list of missing mandatory fields
+
+recommendedRoute = routing decision
+
+reasoning  = short explanation of decision
 
 
 ###### Future Improvements
 
 OCR support for scanned PDFs
+
 Confidence scoring for extraction
+
 AI-assisted extraction fallback
+
 Persistent storage integration
+
 Containerized deployment
 
-pdf-parse (PDF parsing)
-
-Jest (unit testing)
